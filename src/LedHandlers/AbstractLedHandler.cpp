@@ -1,6 +1,6 @@
 #include "AbstractLedHandler.hh"
 
-AbstractLedHandler::AbstractLedHandler(ILedStrip* strip) : _strip(strip)
+AbstractLedHandler::AbstractLedHandler(LedStrip* strip) : _strip(strip)
 {
 
 }

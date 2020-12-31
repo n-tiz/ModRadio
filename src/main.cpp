@@ -5,9 +5,7 @@ Program _program = Program();
 
 void setup()
 {
-      Serial.begin(9600);
-Serial.println("SETUP");
-delay(1000);
+  Serial.begin(9600);
   _program.Initialize();
 }
 

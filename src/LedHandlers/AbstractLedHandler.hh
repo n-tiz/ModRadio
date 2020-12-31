@@ -10,9 +10,9 @@ class AbstractLedHandler
     virtual void Initialize() = 0;
 
  protected:
-    AbstractLedHandler(ILedStrip* strip);
+    AbstractLedHandler(LedStrip* strip);
+    LedStrip* _strip;
     
-    ILedStrip* _strip;
   private:
 };
 

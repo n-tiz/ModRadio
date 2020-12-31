@@ -4,7 +4,9 @@
 #include "LedHandlers/AbstractLedHandler.hh"
 #include "Utils/LimitedBuffer.hpp"
 
-const size_t HANDLERS_COUNT = 1;
+const size_t LEDS1_COUNT = 2*8;
+
+const size_t HANDLERS_COUNT = 2;
 
 class Program
 {
@@ -17,6 +19,8 @@ class Program
 
   private:
     AbstractLedHandler* _ledHandlers[HANDLERS_COUNT];
+    CRGB _leds1[LEDS1_COUNT];
+
 };
 
 #endif /*__PROGRAM_HH__*/

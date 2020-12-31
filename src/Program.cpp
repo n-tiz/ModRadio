@@ -8,10 +8,11 @@ Program::Program()
 
 void Program::Initialize()
 {
+    FastLED.addLeds<NEOPIXEL, 6>(_leds1, LEDS1_COUNT);
    
 
-    _ledHandlers[0] = new VariableCapacitorValueLedHandler(new LedStrip<6, 8>());
- //   _ledHandlers[1] = new VariableCapacitorValueLedHandler(Adafruit_NeoPixel(8, 6, NEO_GRB + NEO_KHZ800));
+    _ledHandlers[0] = new VariableCapacitorValueLedHandler(new LedStrip(_leds1, 0, 8));
+    _ledHandlers[1] = new VariableCapacitorValueLedHandler(new LedStrip(_leds1, 8, 8));
 
     for (size_t i = 0; i < HANDLERS_COUNT; i++)
     {

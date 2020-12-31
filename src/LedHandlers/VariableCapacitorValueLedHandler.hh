@@ -18,7 +18,7 @@ const int MAX_ADC_VALUE = 1023;
 class VariableCapacitorValueLedHandler : public AbstractLedHandler
 {
 public:
-  VariableCapacitorValueLedHandler(ILedStrip* strip);
+  VariableCapacitorValueLedHandler(LedStrip* strip);
   virtual void Initialize() override;
   virtual void Update() override;
 

@@ -1,6 +1,6 @@
 #include "VariableCapacitorValueLedHandler.hh"
 
-VariableCapacitorValueLedHandler::VariableCapacitorValueLedHandler(ILedStrip *strip) : AbstractLedHandler(strip)
+VariableCapacitorValueLedHandler::VariableCapacitorValueLedHandler(LedStrip *strip) : AbstractLedHandler(strip)
 {
 }
 
@@ -8,8 +8,6 @@ void VariableCapacitorValueLedHandler::Initialize()
 {
   pinMode(OUT_PIN, OUTPUT);
   pinMode(IN_PIN, OUTPUT);
-  Serial.println("INNNNIIIIIITTTTTTT");
-  delay(200);
 }
 
 float GetCapacitorValue()
@@ -49,7 +47,4 @@ void VariableCapacitorValueLedHandler::Update()
   {
     _strip->SetHSV(i, h, 255, 120);
   }
-
-  // _leds[0] = ; delay(1000);
-	// _leds[0] = CRGB::Black; FastLED.show(); delay(1000);
 }
