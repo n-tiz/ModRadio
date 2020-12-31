@@ -4,6 +4,8 @@
 #include "LedHandlers/AbstractLedHandler.hh"
 #include "Utils/LimitedBuffer.hpp"
 
+const size_t HANDLERS_COUNT = 1;
+
 class Program
 {
   public:
@@ -14,7 +16,7 @@ class Program
   protected:
 
   private:
-  AbstractLedHandler* _ledHandler;
+    AbstractLedHandler* _ledHandlers[HANDLERS_COUNT];
 };
 
 #endif /*__PROGRAM_HH__*/

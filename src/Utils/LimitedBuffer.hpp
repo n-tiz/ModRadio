@@ -30,7 +30,7 @@ public:
         return _actualSize;
     }
 
-    const T &operator[](int index) const
+    const T &operator[](unsigned int index) const
     {
         index = (_beginIndex + index) % S;
         return _itemsArray[index];

@@ -2,19 +2,28 @@
 #include "Program.hh"
 #include "LedHandlers/VariableCapacitorValueLedHandler.hh"
 
-
-
 Program::Program()
 {
 }
 
 void Program::Initialize()
 {
-    _ledHandler = new VariableCapacitorValueLedHandler(Adafruit_NeoPixel(16, 6, NEO_GRB + NEO_KHZ800));
-    _ledHandler->Initialize();
+   
+
+    _ledHandlers[0] = new VariableCapacitorValueLedHandler(new LedStrip<6, 8>());
+ //   _ledHandlers[1] = new VariableCapacitorValueLedHandler(Adafruit_NeoPixel(8, 6, NEO_GRB + NEO_KHZ800));
+
+    for (size_t i = 0; i < HANDLERS_COUNT; i++)
+    {
+        _ledHandlers[i]->Initialize();
+    }
 }
 
 void Program::Update()
 {
-    _ledHandler->Update();
+    for (size_t i = 0; i < HANDLERS_COUNT; i++)
+    {
+        _ledHandlers[i]->Update();
+    }
+    FastLED.show(); 
 }

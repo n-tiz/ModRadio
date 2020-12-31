@@ -1,7 +1,6 @@
 #include "VariableCapacitorValueLedHandler.hh"
-#include "Utils/hsl.hh"
 
-VariableCapacitorValueLedHandler::VariableCapacitorValueLedHandler(Adafruit_NeoPixel strip) : AbstractLedHandler(strip)
+VariableCapacitorValueLedHandler::VariableCapacitorValueLedHandler(ILedStrip *strip) : AbstractLedHandler(strip)
 {
 }
 
@@ -9,11 +8,8 @@ void VariableCapacitorValueLedHandler::Initialize()
 {
   pinMode(OUT_PIN, OUTPUT);
   pinMode(IN_PIN, OUTPUT);
-
-  _strip.begin();
-  _strip.show();
-
-  Serial.begin(9600);
+  Serial.println("INNNNIIIIIITTTTTTT");
+  delay(200);
 }
 
 float GetCapacitorValue()
@@ -42,22 +38,18 @@ float getAverage(const LimitedBuffer<float, BUFFER_SIZE> &capas)
 void VariableCapacitorValueLedHandler::Update()
 {
   float capa = GetCapacitorValue();
-   _capacities.Push(capa);
-   uint16_t n = _strip.numPixels();
+  _capacities.Push(capa);
+  uint16_t n = _strip->GetCount();
 
-   float average = getAverage(_capacities);
+  float average = getAverage(_capacities);
 
-   uint16_t hue = min(359, max((average - 19) / 500 * 359, 0)); // 0-359
- // uint16_t hue = min(359, max((capa - 19) / 500 * 359, 0)); // 0-359
-
-  uint8_t saturation = 100; // 0-100
-  uint8_t lightness = 50;   // 0-100
-  uint32_t color = hsl(hue, saturation, lightness);
+  uint8_t h = min(255, max((average - 19) / 500 * 255, 0)); // 0-255
 
   for (uint8_t i = 0; i < n; i++)
   {
-    _strip.setPixelColor(i, color);
-    _strip.show();
+    _strip->SetHSV(i, h, 255, 120);
   }
-  Serial.println("lol");
+
+  // _leds[0] = ; delay(1000);
+	// _leds[0] = CRGB::Black; FastLED.show(); delay(1000);
 }

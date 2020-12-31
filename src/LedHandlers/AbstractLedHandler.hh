@@ -1,7 +1,7 @@
 #ifndef __ABSTRACTLEDHANDLER_HH__
 #define __ABSTRACTLEDHANDLER_HH__
 
- #include <Adafruit_NeoPixel.h>
+#include "Hardware/LedStrip.hpp"
 
 class AbstractLedHandler
 {
@@ -10,9 +10,9 @@ class AbstractLedHandler
     virtual void Initialize() = 0;
 
  protected:
-    AbstractLedHandler(Adafruit_NeoPixel strip);
-    Adafruit_NeoPixel _strip;
-
+    AbstractLedHandler(ILedStrip* strip);
+    
+    ILedStrip* _strip;
   private:
 };
 

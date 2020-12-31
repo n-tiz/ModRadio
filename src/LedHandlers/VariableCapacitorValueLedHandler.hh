@@ -3,6 +3,7 @@
 
 #include "AbstractLedHandler.hh"
 #include "Utils/LimitedBuffer.hpp"
+#include "Hardware/LedStrip.hpp"
 
 const int BUFFER_SIZE = 50;
 
@@ -17,7 +18,7 @@ const int MAX_ADC_VALUE = 1023;
 class VariableCapacitorValueLedHandler : public AbstractLedHandler
 {
 public:
-  VariableCapacitorValueLedHandler(Adafruit_NeoPixel stip);
+  VariableCapacitorValueLedHandler(ILedStrip* strip);
   virtual void Initialize() override;
   virtual void Update() override;
 
