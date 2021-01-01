@@ -37,6 +37,8 @@ void VariableCapacitorValueLedHandler::Update()
 {
   float capa = GetCapacitorValue();
   _capacities.Push(capa);
+  if (!_capacities.IsFull())
+    return;
   uint16_t n = _strip->GetCount();
 
   float average = getAverage(_capacities);

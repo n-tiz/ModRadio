@@ -30,6 +30,11 @@ public:
         return _actualSize;
     }
 
+    bool IsFull() const
+    {
+        return GetActualSize() == GetMaxSize();
+    }
+
     const T &operator[](unsigned int index) const
     {
         index = (_beginIndex + index) % S;

@@ -4,9 +4,10 @@
 #include "LedHandlers/AbstractLedHandler.hh"
 #include "Utils/LimitedBuffer.hpp"
 
-const size_t LEDS1_COUNT = 2*8;
 
-const size_t HANDLERS_COUNT = 2;
+const size_t HANDLERS_COUNT = 5;
+const size_t LEDS_BY_RING = 8;
+const size_t LEDS1_COUNT = HANDLERS_COUNT * LEDS_BY_RING;
 
 class Program
 {
