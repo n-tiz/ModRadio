@@ -5,6 +5,9 @@
 #include "Utils/LimitedBuffer.hpp"
 #include "Hardware/LedConstants.hh"
 
+const size_t HANDLERS_COUNT = 3;
+
+
 class Program
 {
   public:
@@ -16,7 +19,7 @@ class Program
 
   private:
     AbstractLedHandler* _ledHandlers[HANDLERS_COUNT];
-    CRGB _leds1[LEDS1_COUNT];
+    CRGB _leds1[TOTAL_LEDS_COUNT];
 };
 
 #endif /*__PROGRAM_HH__*/

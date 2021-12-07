@@ -11,15 +11,13 @@
 class SoundLedHandler : public AbstractLedHandler
 {
 public:
-  SoundLedHandler(LedStrip* strip, int id);
+  SoundLedHandler(LedStrip* strip);
   virtual void Initialize() override;
   virtual void Update() override;
 
 protected:
 private:
-  int _id;
-  unsigned int _ledsPairs[LEDS_BY_RING/2][2];
-    LimitedBuffer<unsigned int, VALUES> _values[LEDS_BY_RING/2];
+ // LimitedBuffer<unsigned int, VALUES> _values[LEDS_BY_RING/2];
 
 };
 

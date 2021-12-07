@@ -35,6 +35,7 @@ float getAverage(const LimitedBuffer<float, BUFFER_SIZE> &capas)
 
 void VariableCapacitorValueLedHandler::Update()
 {
+  return;
   float capa = GetCapacitorValue();
   _capacities.Push(capa);
   if (!_capacities.IsFull())
