@@ -4,27 +4,18 @@
 #include "AbstractLedHandler.hh"
 #include "Utils/LimitedBuffer.hpp"
 #include "Hardware/LedStrip.hpp"
-
-const int BUFFER_SIZE = 50;
-
-const int OUT_PIN = 3;
-const int IN_PIN = PIN_A0;
-
-const float IN_STRAY_CAP_TO_GND = 24.48;
-const float IN_CAP_TO_GND = IN_STRAY_CAP_TO_GND;
-const float R_PULLUP = 34.8;
-const int MAX_ADC_VALUE = 1023;
+#include "Hardware/Capacitor.hh"
 
 class VariableCapacitorValueLedHandler : public AbstractLedHandler
 {
 public:
-  VariableCapacitorValueLedHandler(LedStrip* strip);
+  VariableCapacitorValueLedHandler(LedStrip *strip, const Capacitor& capacitor);
   virtual void Initialize() override;
   virtual void Update() override;
 
 protected:
 private:
-  LimitedBuffer<float, BUFFER_SIZE> _capacities;
+  const Capacitor &_capacitor;
 };
 
 #endif /*__VARIABLECAPACITORVALUELEDHANDLER_HH__*/
