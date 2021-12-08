@@ -25,11 +25,11 @@ void MagicEyeLedHandler::Update()
 {
   uint16_t n = _strip->GetCount();
 
-  uint8_t r = random() % 42 == 0 ? 255 : 10;
+  uint8_t r = random() % 42 == 0 ? 200 : 10;
   _values.Push(r);
   uint8_t v = getAverage(_values);
   for (uint8_t i = 0; i < n; i++)
   {
-    _strip->SetHSV(i, 85, 255, v);
+    _strip->SetHSV(i, 85, 175, v);
   }
 }
