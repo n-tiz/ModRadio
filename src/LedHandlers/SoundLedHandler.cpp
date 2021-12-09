@@ -1,12 +1,13 @@
 #include "SoundLedHandler.hh"
 #include "Utils/AudioSpectrumAnalyzer.hh"
 
-SoundLedHandler::SoundLedHandler(LedStrip *strip) : AbstractLedHandler(strip)
+SoundLedHandler::SoundLedHandler(LedStrip *strip, const Capacitor& capacitor) : AbstractLedHandler(strip), _capacitor(capacitor)
 {
 }
 
 void SoundLedHandler::Initialize()
 {
+  pinMode(ANALOG_INPUT,INPUT);
   // const unsigned int medium = LEDS_BY_RING / 2 - 1;
   // const size_t quarter = LEDS_BY_RING / 4;
 
@@ -33,25 +34,51 @@ unsigned int getAverage(const LimitedBuffer<unsigned int, VALUES> &values)
   return sum / (float)values.GetActualSize();
 }
 
+// get maximum reading value
+uint16_t get_max() {
+  uint16_t max_v = 0;
+  for(uint8_t i = 0; i < 100; i++) {
+    uint16_t r = analogRead(ANALOG_INPUT);  // read from analog channel 3 (A3)
+    if(max_v < r) max_v = r;
+    delayMicroseconds(200);
+  }
+  return max_v;
+}
+ 
+
+
+
 void SoundLedHandler::Update()
 {
-  unsigned int groups = LEDS_BY_RING / 2;
+  uint16_t n = _strip->GetCount();
 
-  // for (size_t i = 0; i < groups; i++)
-  // {
-  //   unsigned int hueMin = 160;
-  //   unsigned int hueMax = 200;
+  float capacitor = _capacitor.GetValue();
+  unsigned int hueMin = max(capacitor - 25, 0);
+  unsigned int hueMax = min(255, capacitor + 25);
 
-  //   auto globalId = _id * groups + i;
-  //   unsigned int h = hueMin + (hueMax - hueMin) * sin(globalId / (float)(groups * HANDLERS_COUNT) * PI);
+//   auto val = analogRead(ANALOG_INPUT);
+//   val = abs(val - 512); // Center on zero
+// Serial.println(val);
+//   for (uint8_t i = 0; i < n; i++)
+//   {
+//     unsigned int h = hueMin + (hueMax - hueMin) * sin(i / (float)(_strip->GetCount()) * PI);
+//     bool rand = !(random() % 500);
+//     _strip->SetHSV(i, h, 255, rand ? 255 : (val > 60 ? val : 0));
+//   }
 
-  //   // unsigned int v = (unsigned int) AudioSpectrumAnalyzer::Instance().data_avgs[4];
-  //   unsigned int v = min((unsigned int)AudioSpectrumAnalyzer::Instance().data[(int)(globalId / (float)(groups * HANDLERS_COUNT) * X)] * 5, 255);
-  //   _values[i].Push(v);
-  //   //       Serial.println(v);
-  //   //unsigned int v = random(20,255);
-  //   v = getAverage(_values[i]);
-  //   _strip->SetHSV(_ledsPairs[i][0], h, 255, v);
-  //   _strip->SetHSV(_ledsPairs[i][1], h, 255, v);
-  // }
+  uint32_t v = get_max();
+  // get actual voltage (ADC voltage reference = 1.1V)
+  v = v * 1100/1023;
+  // calculate the RMS value ( = peak/√2 )
+  v /= sqrt(2);
+
+// Serial.println(v - 430);
+
+  for (uint8_t i = 0; i < n; i++)
+  {
+    unsigned int h = hueMin + (hueMax - hueMin) * sin(i / (float)(_strip->GetCount()) * PI);
+    bool rand = !(random() % 500);
+//    _strip->SetHSV(i, h, 255, rand ? 255 : (val > 60 ? val : 0));
+    _strip->SetHSV(i, h, 255,  (v - 430) * 20);
+  }
 }
